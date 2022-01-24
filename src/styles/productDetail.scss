@@ -1,0 +1,50 @@
+img {
+  width: 80%;
+  display: block;
+}
+.thumbnail {
+  border: 1px solid #d5d5d5;
+}
+.thumbnail-active {
+  border: 3px solid #808080;
+}
+h1 {
+  font-size: 26px;
+  font-weight: 70;
+  max-height: 49px;
+}
+.price {
+  font-size: 24px;
+  font-weight: 550;
+  text-decoration: none;
+}
+div.option {
+  margin: 0 10px 8px 0;
+  height: 40px;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  text-align: center;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%);
+  cursor: pointer;
+}
+.option-active {
+  border: 3px solid #808080;
+  margin: 0 10px 8px 0;
+  text-align: center;
+  border-radius: 2px;
+}
+.barem {
+  background: #f7f7f7;
+}
+.yellowBarem{
+  background: #ffdc73;
+}
+button{
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: hsl(45, 85%, 54%);
+  color: #f7f7f7;
+  border: none;
+}
