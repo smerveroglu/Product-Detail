@@ -1,23 +1,23 @@
 <template>
   <div>
     <div class="barem mt-2 grid">
-      <div class="col-4 mt-2">
-        <h3 class="md:col-4 lg:col3 -mt-1 w-5">
+      <div class="col-3 mt-2 flex flex-column">
+        <h3 class="flex justify-content-between font-light">
           Toptan Fiyat
           <span>:</span>
         </h3>
 
-        <h3 class="-mt-4 md:col-4 lg:col-3">(Adet)</h3>
+        <h3 class="mt-1 font-light">(Adet)</h3>
       </div>
-      <div class="col-8 mt-4">
-        <div class="grid -ml-7">
+      <div class="col-9 mt-4">
+        <div class="grid">
           <div
             class="w-4"
             v-for="(value, index) in data.baremList"
             :key="index"
           >
             <div
-              class="border-right-2 w-5"
+              class="border-right-1 w-5"
               :class="[activeClass === index ? 'yellowBarem' : 'barem']"
               v-if="index !== data.baremList.length - 1"
             >
@@ -30,7 +30,7 @@
             </div>
 
             <div
-              class="border-right-2 w-5"
+              class="border-right-1 w-5"
               :class="[activeClass === index ? 'yellowBarem' : 'barem']"
               v-else
             >
@@ -42,26 +42,30 @@
           </div>
         </div>
       </div>
-      <div class="col-4 mt-2">
-        <h3 class="-mt-4 md:col-4 lg:col-3">
+      <div class="col-3 mt-1">
+        <h3 class="flex justify-content-between font-light">
           Adet
           <span>:</span>
         </h3>
       </div>
-      <div class="col-8">
-        <div class="grid -ml-7 -mt-3">
-          <input class="w-4rem h-2rem mr-3" type="number" v-model="unit" />
-          <p style="color: grey; font-size: 15px">Adet</p>
-        </div>
+      <div class="col-9 flex flex-row align-items-center">
+        <input class="w-4rem h-2rem mr-3" type="number" v-model="unit" />
+        <p style="color: grey; font-size: 15px">Adet</p>
       </div>
     </div>
-    <div class="col-12">
-      <div class="grid mt-1">
-        <h2 class="w-4rem h-2rem mr-3 font-semibold">Toplam</h2>
-        <h1 class="mt-2 ml-6 font-bold">: {{ totalPrice }} TL</h1>
+    <div class="grid mt-2">
+      <h2 class="col-12 md:col-4 lg:col-3 mt-1 flex justify-content-between">
+        Toplam
+        <span>:</span>
+      </h2>
+      <div class="col-12 w-4 -mt-3">
+        <h1 class="font-bold">{{ totalPrice }} TL</h1>
       </div>
     </div>
-    <button class="font-bold">SEPETE EKLE</button>
+
+    <button class="font-bold" @click="addItem()" :disabled="isEmpty">
+      SEPETE EKLE
+    </button>
   </div>
 </template>
 <script>
@@ -70,10 +74,30 @@ export default {
   props: ["data"],
   data() {
     return {
-      unit: null,
+      unit: "",
       activeClass: -1,
       totalPrice: 0,
+      barem: {},
     };
+  },
+  computed: {
+    isEmpty() {
+      return (
+        Object.values(this.$store.state.attributes).every(
+          (value) => value === ""
+        ) || this.activeClass === -1
+      );
+    },
+  },
+  methods: {
+    addItem() {
+      console.log(
+        "id: ",
+        this.$store.state.attributes.id,
+        "barem: ",
+        this.barem
+      );
+    },
   },
   watch: {
     unit: {
@@ -83,11 +107,16 @@ export default {
             newVal >= element.minimumQuantity &&
             newVal <= element.maximumQuantity
           ) {
+            this.barem = element;
             this.totalPrice = newVal * element.price;
             this.activeClass = index;
           }
         });
-        if (newVal < this.data.baremList[0].minimumQuantity) {
+        if (
+          newVal < this.data.baremList[0].minimumQuantity ||
+          newVal >
+            this.data.baremList[this.data.baremList.length - 1].maximumQuantity
+        ) {
           this.activeClass = -1;
           this.totalPrice = 0;
         }

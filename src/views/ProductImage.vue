@@ -41,9 +41,16 @@ export default {
   watch: {
     "$store.state.attributes": {
       handler(newVal) {
-        console.log(newVal);
-        console.log(this.data.productVariants);
-
+        this.data.productVariants.forEach((element) => {
+          if (
+            element.attributes[1].value === newVal.renk &&
+            element.attributes[0].value === newVal.beden
+          ) {
+            this.bigImage = element.images[0];
+            this.images = element.images;
+            this.$store.state.attributes.id = element.id;
+          }
+        });
       },
       deep: true,
     },

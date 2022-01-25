@@ -7,6 +7,7 @@ export const store = new Vuex.Store({
     attributes: {
       beden: "",
       renk: "",
+      id: "",
     },
   },
 });
