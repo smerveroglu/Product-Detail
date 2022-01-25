@@ -65,6 +65,7 @@ export default {
   methods: {
     selectColor(value) {
       this.activeColor = value;
+      this.$store.state.attributes.beden = "";
       if (this.$store.state.attributes.renk !== value)
         this.$store.state.attributes.renk = value;
       let selectableSize = this.data.productVariants.flatMap((o) =>
