@@ -49,6 +49,12 @@ export default {
             this.bigImage = element.images[0];
             this.images = element.images;
             this.$store.state.attributes.id = element.id;
+          } else if (
+            element.attributes[1].value === newVal.renk &&
+            newVal.beden === ""
+          ) {
+            this.bigImage = element.images[0];
+            this.images = element.images;
           }
         });
       },
